@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jednotlivá hlasování — PS PČR</title>
+<meta name="description" content="Přehled jednotlivých hlasování Poslanecké sněmovny — kdo a jak hlasoval. Data z otevřených dat PSP.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <nav class="nav"><a href="index.html">Poslanci</a><a href="hlasovani.html" class="active">Hlasování</a></nav>
+    <h1>Jednotlivá hlasování</h1>
+    <div class="sub" id="subtitle">Načítám data…</div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="controls">
+    <input type="search" id="search" placeholder="Hledat v názvu hlasování…" autocomplete="off">
+    <select id="schuzeSelect"><option value="">Všechny schůze</option></select>
+    <select id="vysledekSelect">
+      <option value="">Přijaté i zamítnuté</option>
+      <option value="A">Jen přijaté</option>
+      <option value="R">Jen zamítnuté</option>
+    </select>
+    <span class="count" id="count"></span>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr id="head">
+          <th data-sort="id">Datum</th>
+          <th data-sort="schuze" class="hide-sm">Schůze</th>
+          <th data-sort="nazev">Bod jednání</th>
+          <th data-sort="prijato" class="num">Výsledek</th>
+          <th class="num hide-sm">Pro / Proti / Zdržel</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+  <div id="more" style="text-align:center;padding:18px"></div>
+
+  <footer>
+    Zdroj: <a href="https://www.psp.cz/sqw/hp.sqw?k=1300" target="_blank" rel="noopener">otevřená data Poslanecké sněmovny PČR</a>.
+    Zobrazena platná jmenovitá hlasování 10. volebního období. Zmatečná (neplatná) hlasování se nezobrazují.
+    <div id="freshness"></div>
+  </footer>
+</div>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal modal-wide" id="modal" style="position:relative">
+    <button class="close" id="modalClose" aria-label="Zavřít">×</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script src="hlasovani.js"></script>
+</body>
+</html>

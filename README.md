@@ -6,12 +6,18 @@ a publikuje statický dashboard. Vše běží zdarma přes GitHub Actions + GitH
 
 ## Co to umí
 
+**Přehled poslanců** (`index.html`):
 - Tabulka všech poslanců s fotkou, klubem, krajem a mírou účasti
 - Třídění a filtrování (podle klubu, jména, jen aktivní mandát)
 - Metriky **Hlasoval / Omluven / Nepřihlášen** přesně podle metodiky stránky `pstat.sqw`
 - Přehled průměrné účasti podle klubů
 - Detail poslance (rozpad ANO/NE/zdržel se, kontakty, odkazy na PSP)
 - Časová řada průměrů v `data/history.csv` (graf vývoje v čase)
+
+**Jednotlivá hlasování** (`hlasovani.html`):
+- Seznam všech hlasování (datum, schůze, bod jednání, výsledek, poměr pro/proti/zdržel)
+- Filtrování podle schůze, výsledku a hledání v názvu
+- Detail hlasování: **jak hlasoval každý poslanec** — rozpad po klubech + jmenovitě
 
 ## Zdroj dat a metodika
 
@@ -69,12 +75,16 @@ Interval změníte v `cron` výrazu na začátku workflow.
 ## Struktura
 
 ```
-index.html, app.js, style.css   – statický dashboard (bez build kroku)
-scraper/scrape.py               – scraper otevřených dat PSP
-data/poslanci.json              – vygenerovaná data (verzovaná)
-data/history.csv                – časová řada průměrné účasti
-photos/                         – fotky poslanců (volitelně, přes --photos)
-.github/workflows/              – plánované scrapování + nasazení
+index.html, app.js              – přehled poslanců
+hlasovani.html, hlasovani.js     – prohlížeč jednotlivých hlasování
+style.css                        – sdílené styly (bez build kroku)
+scraper/scrape.py                – scraper otevřených dat PSP
+data/poslanci.json               – poslanci + souhrnné statistiky
+data/votings.json                – seznam všech hlasování (metadata)
+data/votes/<id>.json             – jmenovité hlasy k hlasování (lazy-load)
+data/history.csv                 – časová řada průměrné účasti
+photos/                          – fotky poslanců (volitelně, přes --photos)
+.github/workflows/               – plánované scrapování + nasazení
 ```
 
 ## Možná rozšíření

@@ -52,7 +52,7 @@ jobs:
       - name: Sestavit publikovanou složku
         run: |
           mkdir -p _site
-          cp -r index.html app.js style.css data photos _site/ 2>/dev/null || true
+          cp -r index.html hlasovani.html app.js hlasovani.js style.css data photos _site/ 2>/dev/null || true
 
       - uses: actions/upload-pages-artifact@v3
         with:
