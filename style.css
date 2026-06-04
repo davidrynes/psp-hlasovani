@@ -93,7 +93,7 @@ tbody tr:hover { background: #fafbfc; }
 td.num { text-align: right; font-variant-numeric: tabular-nums; }
 .minibar { display: inline-grid; grid-template-columns: 1fr 42px; gap: 8px; align-items: center; min-width: 120px; }
 .minibar .t { background: #eef0f3; border-radius: 5px; height: 9px; overflow: hidden; }
-.minibar .f { height: 100%; border-radius: 5px; }
+.minibar .f { display: block; height: 100%; border-radius: 5px; }
 .minibar .v { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
 .pill { font-variant-numeric: tabular-nums; font-weight: 600; }
 .inactive td { opacity: .5; }
