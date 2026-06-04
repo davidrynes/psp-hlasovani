@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Účast poslanců na hlasování — PS PČR</title>
+<meta name="description" content="Přehled účasti poslanců Poslanecké sněmovny na jmenovitých hlasováních. Data z otevřených dat PSP.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <h1>Účast poslanců na hlasování</h1>
+    <div class="sub" id="subtitle">Načítám data…</div>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="kpis" id="kpis"></section>
+
+  <section class="panel">
+    <h2>Průměrná účast podle klubu <span style="font-weight:400;color:var(--muted);font-size:13px">(% odhlasovaných hlasování · klikni pro filtr)</span></h2>
+    <div class="clubgrid" id="clubgrid"></div>
+  </section>
+
+  <div class="controls">
+    <input type="search" id="search" placeholder="Hledat poslance…" autocomplete="off">
+    <select id="klubSelect"><option value="">Všechny kluby</option></select>
+    <label class="toggle"><input type="checkbox" id="onlyActive" checked> jen aktivní mandát</label>
+    <span class="count" id="count"></span>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr id="head">
+          <th data-sort="name">Poslanec</th>
+          <th data-sort="klub" class="hide-sm">Klub</th>
+          <th data-sort="kraj" class="hide-sm">Kraj</th>
+          <th data-sort="pct_hlasoval" class="num">Hlasoval</th>
+          <th data-sort="pct_omluven" class="num hide-sm">Omluven</th>
+          <th data-sort="pct_neprihlasen" class="num">Nepřihlášen</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <footer>
+    Zdroj: <a href="https://www.psp.cz/sqw/hp.sqw?k=1300" target="_blank" rel="noopener">otevřená data Poslanecké sněmovny PČR</a>.
+    Statistika počítána metodou stránky <i>pstat.sqw</i>: <b>Hlasoval</b> = ANO + NE + zdržel se;
+    <b>Omluven</b> = absence krytá omluvou; <b>Nepřihlášen</b> = absence bez omluvy.
+    Zmatečná (neplatná) hlasování se nezapočítávají.
+    <div id="freshness"></div>
+  </footer>
+</div>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal" id="modal" style="position:relative">
+    <button class="close" id="modalClose" aria-label="Zavřít">×</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

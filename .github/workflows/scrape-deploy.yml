@@ -1,0 +1,69 @@
+name: Scrape & deploy dashboard
+
+on:
+  schedule:
+    - cron: "0 4 * * *"        # každý den v 06:00 SELČ (04:00 UTC)
+  workflow_dispatch:            # ruční spuštění tlačítkem
+  push:
+    branches: [main]
+    paths:                      # při změně kódu webu/scraperu
+      - "index.html"
+      - "app.js"
+      - "style.css"
+      - "scraper/**"
+      - ".github/workflows/**"
+
+permissions:
+  contents: write               # commit aktualizovaných dat
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Scrape otevřená data PSP
+        run: python3 scraper/scrape.py --photos
+
+      - name: Commit aktualizovaná data
+        run: |
+          git config user.name "psp-scraper-bot"
+          git config user.email "actions@github.com"
+          git add data/ photos/ || true
+          if git diff --cached --quiet; then
+            echo "Žádné změny dat."
+          else
+            git commit -m "data: aktualizace účasti poslanců $(date -u +%Y-%m-%d) [skip ci]"
+            git push
+          fi
+
+      - uses: actions/configure-pages@v5
+
+      - name: Sestavit publikovanou složku
+        run: |
+          mkdir -p _site
+          cp -r index.html app.js style.css data photos _site/ 2>/dev/null || true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
