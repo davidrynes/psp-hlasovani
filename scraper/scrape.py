@@ -45,6 +45,17 @@ ABSENT_CODE = "@"                  # nepřihlášen (může být i omluven – v
 OMLUVEN_CODE = "M"
 BEFORE_OATH = {"W"}
 
+# Čitelné a sjednocené názvy klubů (zkratky z otevřených dat PSP bývají krkolomné).
+CLUB_LABEL = {
+    "ANO2011": "ANO",
+    "MS": "Motoristé",     # Poslanecký klub Motoristé sobě
+    "Moto": "Motoristé",   # kandidátka „Motoristé sobě" – sjednotit s klubem
+}
+
+
+def klub_label(zkr):
+    return CLUB_LABEL.get(zkr, zkr)
+
 
 def log(msg):
     print(f"[scrape] {msg}", file=sys.stderr, flush=True)
@@ -295,6 +306,7 @@ def main():
         klub_oid = osoba_klub.get(id_osoba)
         klub_zkr = organ_zkratka(klub_oid) if klub_oid else organ_zkratka(r[3])
         klub_full = organ_name(klub_oid) if klub_oid else organ_name(r[3])
+        klub_zkr = klub_label(klub_zkr)   # čitelný a sjednocený název klubu
 
         c = cat.get(idp, Counter())
         ano, ne, zdrzel = c["ano"], c["ne"], c["zdrzel"]
@@ -355,10 +367,12 @@ def main():
 
     out.sort(key=lambda p: (p["prijmeni"], p["jmeno"]))
 
-    # agregace za kluby
+    # agregace za kluby (jen aktivní mandáty → součet členů = počet poslanců)
     kluby = defaultdict(lambda: {"count": 0, "sum_hlasoval": 0.0, "sum_neprihlasen": 0.0,
                                  "name": ""})
     for p in out:
+        if not p["aktivni"]:
+            continue
         k = kluby[p["klub"]]
         k["count"] += 1
         k["name"] = p["klub_full"]

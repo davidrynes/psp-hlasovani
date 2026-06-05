@@ -1,8 +1,8 @@
 "use strict";
 
 const KLUB_COLORS = {
-  "ANO2011": "#0a318b", "ODS": "#0073cf", "SPD": "#1b6ec2", "STAN": "#e2001a",
-  "Piráti": "#000000", "KDU-ČSL": "#f7b500", "TOP09": "#7d3f98", "Moto": "#2b2b2b", "MS": "#c0392b",
+  "ANO": "#0a318b", "ODS": "#0073cf", "SPD": "#1b6ec2", "STAN": "#e2001a",
+  "Piráti": "#000000", "KDU-ČSL": "#f7b500", "TOP09": "#7d3f98", "Motoristé": "#1aa0a8",
 };
 const FALLBACK = ["#3b82f6","#ef4444","#10b981","#f59e0b","#8b5cf6","#ec4899","#14b8a6","#64748b"];
 const esc = s => (s == null ? "" : String(s)).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));

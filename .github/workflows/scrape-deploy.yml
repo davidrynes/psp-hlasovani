@@ -2,7 +2,7 @@ name: Scrape & deploy dashboard
 
 on:
   schedule:
-    - cron: "0 4 * * *"        # každý den v 06:00 SELČ (04:00 UTC)
+    - cron: "0 */6 * * *"      # každých 6 hodin (ať web těsně sleduje export PSP)
   workflow_dispatch:            # ruční spuštění tlačítkem
   push:
     branches: [main]
